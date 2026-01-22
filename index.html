@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"
+      rel="stylesheet"
+    />
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diya</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="envelope-wrapper">
+        <div class="envelope">
+          <div class="letter">
+            <div class="text">
+              <strong>Dearest Diya!</strong>
+              <p>
+                I am very very SORRYYY....
+                <br />Sorry ne yaar, bhul thai gai....please maaf kari de <br />
+                I know I messed up, I promise have ni thase.<br />
+                Please forgive me, I miss you a lot!<br />
+                I love you so much, tane khabar ketli yaad ave mane tari...
+                <br />
+                I miss you sooo soo much, always, all the time.... <br />
+                Avu ni kar, please mani jaaa, please... <br />
+                You are my soulmate, my best friend forever & ever & ever ♡
+                <br />
+                Trust me, the reason I believe in "friendship" is because of
+                you... <br />
+                Please don't be angry with me... <br />
+                I will never ever do this again... <br />
+                Love you loads ♡ <br />
+                <br /><br />
+                (I hope you like this... <br />
+                made specially for u by ur 'techie' friend <br />
+                - Urvi ♡ )
+                <br /><br />
+                <br /><br />
+              </p>
+              <div class="letter-end-space"></div>
+            </div>
+          </div>
+        </div>
+        <div class="heart"></div>
+      </div>
+    </div>
+    <!-- <script>
+      const envelope = document.querySelector(".envelope-wrapper");
+      envelope.addEventListener("click", () => {
+        envelope.classList.toggle("flap");
+      });
+    </script> -->
+
+    <script>
+      const wrapper = document.querySelector(".envelope-wrapper");
+      const heart = document.querySelector(".heart");
+      const letter = document.querySelector(".letter");
+
+      // Open/close ONLY when heart is clicked
+      heart.addEventListener("click", (e) => {
+        e.stopPropagation();
+        wrapper.classList.toggle("flap");
+      });
+
+      // Prevent clicks inside the letter from closing it
+      letter.addEventListener("click", (e) => e.stopPropagation());
+    </script>
+
+    <script>
+      const scrollBox = document.querySelector(".envelope > .letter > .text");
+
+      let isDown = false;
+      let startY = 0;
+      let startScrollTop = 0;
+
+      scrollBox.addEventListener("mousedown", (e) => {
+        isDown = true;
+        startY = e.pageY;
+        startScrollTop = scrollBox.scrollTop;
+      });
+
+      window.addEventListener("mouseup", () => {
+        isDown = false;
+      });
+
+      scrollBox.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const dy = e.pageY - startY;
+        scrollBox.scrollTop = startScrollTop - dy;
+      });
+    </script>
+  </body>
+</html>

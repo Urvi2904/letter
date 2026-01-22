@@ -1,0 +1,434 @@
+:root {
+  /* Letter */
+  --primary: #f3b8cf; /* very soft pinkish white */
+
+  /* Background */
+  --bg-color: #fbe1ec;
+  /* muted rose pink (background) */
+
+  /* Envelope */
+  --bg-envelope-color: #ffd6e8; /* baby pink */
+  --envelope-tab: #ffc1db; /* slightly darker baby pink */
+  --envelope-cover: #ffb6d5; /* front flap */
+
+  /* Text & accents */
+  --txt-color: #444;
+  --shadow-color: rgba(0, 0, 0, 0.2);
+
+  /* Heart & scrollbar */
+  --heart-color: #e84c8b; /* keep your current pink */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+.container > .envelope-wrapper {
+  background: var(--bg-envelope-color);
+  box-shadow: 0 0 40px var(--shadow-color);
+}
+.envelope-wrapper > .envelope {
+  position: relative;
+  width: 400px;
+  height: 300px;
+}
+/* .envelope-wrapper > .envelope::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  border-top: 150px solid var(--envelope-tab);
+  border-right: 200px solid transparent;
+  border-left: 200px solid transparent;
+  transform-origin: top;
+  transition: all 0.5s ease-in-out 0.7s;
+} */
+.envelope-wrapper > .envelope::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
+  border-top: 170px solid var(--envelope-tab);
+  border-right: 200px solid transparent;
+  border-left: 200px solid transparent;
+
+  transform-origin: top;
+  transition: all 0.5s ease-in-out 0.7s;
+}
+
+/* .envelope-wrapper > .envelope::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 0px;
+  height: 0px;
+  border-top: 130px solid transparent;
+  border-right: 200px solid var(--envelope-cover);
+  border-bottom: 170px solid var(--envelope-cover);
+  border-left: 200px solid var(--envelope-cover);
+} */
+
+.envelope-wrapper > .envelope::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
+  width: 0;
+  height: 0;
+
+  border-top: 170px solid transparent;
+  border-right: 200px solid var(--envelope-cover);
+  border-bottom: 130px solid var(--envelope-cover);
+  border-left: 200px solid var(--envelope-cover);
+}
+
+.envelope > .letter {
+  position: absolute;
+  right: 22.5%;
+  bottom: 0;
+  width: 54%;
+  height: 80%;
+  text-align: center;
+  transition: all 1s ease-in-out;
+  box-shadow: 0 0 5px var(--shadow-color);
+  padding: 20px 10px;
+}
+
+.envelope > .letter > .text {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: var(--txt-color);
+  text-align: left;
+  font-size: 10px;
+}
+.heart {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  background: var(--heart-color);
+  z-index: 4;
+  transform: translate(-50%, 35%) rotate(45deg);
+  transition: transform 0.5s ease-in-out 1s;
+  box-shadow: 0 1px 6px var(--shadow-color);
+  cursor: pointer;
+}
+.heart:before,
+.heart:after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: var(--heart-color);
+  border-radius: 50%;
+}
+.heart:before {
+  top: -7.5px;
+}
+.heart:after {
+  right: 7.5px;
+}
+.flap > .envelope:before {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
+.flap > .envelope > .letter {
+  bottom: 100px;
+  transform: scale(1.5);
+  transition-delay: 1s;
+  cursor: grab;
+}
+.flap > .heart {
+  transform: rotate(90deg);
+  transition-delay: 0.4s;
+}
+
+/*-------------------------------------------------*/
+/* For vertical scroll of letter  */
+
+.envelope > .letter > .text::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Make the letter a fixed viewport for scrolling content */
+.envelope > .letter {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* keep paper edges clean */
+  box-sizing: border-box; /* important because you use padding */
+  cursor: default;
+  box-shadow: inset 0 -8px 10px -10px rgba(0, 0, 0, 0.2);
+}
+
+.envelope > .letter:active {
+  cursor: grabbing;
+}
+
+/* This becomes the scrollable area */
+.envelope > .letter > .text {
+  flex: 1; /* takes remaining height */
+  overflow-y: auto; /* enables scroll */
+  overflow-x: hidden;
+  padding-right: 8px; /* space for scrollbar */
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  cursor: inherit;
+}
+
+/* Show hand cursor on the scrollable area */
+.envelope > .letter > .text {
+  cursor: pointer; /* hand */
+}
+
+.envelope > .letter > .text {
+  cursor: grab;
+}
+.envelope > .letter > .text:active {
+  cursor: grabbing;
+}
+
+/* ===== FINAL FIX: SCROLL + CURSOR (paste at VERY BOTTOM) ===== */
+
+/* Let the letter receive hover/scroll even if envelope triangles overlap */
+.envelope::before,
+.envelope::after {
+  pointer-events: none;
+}
+
+/* Make letter act like a viewport */
+.envelope > .letter {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Scrollable area */
+.envelope > .letter > .text {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  cursor: inherit;
+}
+
+/* Cursor only when opened */
+.envelope > .letter {
+  cursor: default;
+}
+.flap > .envelope > .letter {
+  cursor: grab;
+}
+.flap > .envelope > .letter:active {
+  cursor: grabbing;
+}
+
+/* Pink scrollbar */
+.envelope > .letter > .text::-webkit-scrollbar {
+  width: 6px;
+}
+.envelope > .letter > .text::-webkit-scrollbar-thumb {
+  background-color: var(--heart-color);
+  border-radius: 10px;
+}
+.envelope > .letter > .text::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Firefox scrollbar */
+.envelope > .letter > .text {
+  scrollbar-width: thin;
+  scrollbar-color: var(--heart-color) transparent;
+}
+
+.letter-end-space {
+  height: 80px; /* adjust as you like */
+}
+
+.heart {
+  transform: translate(-50%, 8%) rotate(45deg) scale(1.4);
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.15;
+  }
+}
+
+/* closed state (no .flap) */
+.envelope-wrapper:not(.flap) .heart {
+  animation: heartbeat 1.6s ease-in-out infinite;
+}
+
+/* open state */
+.envelope-wrapper.flap .heart {
+  animation: none;
+}
+
+.heart {
+  animation: heartbeat 1.6s ease-in-out infinite;
+}
+
+.flap > .envelope > .letter {
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(252, 8, 231, 0.15);
+}
+
+.flap > .envelope > .letter::before {
+  content: "♡ ♡ ♡";
+  position: absolute;
+  top: 8px; /* distance from top of paper */
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: rgba(252, 8, 231, 0.5);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.envelope > .letter > .text {
+  padding-top: 26px;
+}
+
+.envelope > .letter {
+  background: #fff0f6;
+  border-radius: 3px;
+}
+
+.envelope > .letter {
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.03),
+    0 8px 20px rgba(0, 0, 0, 0.2);
+
+  background:
+    linear-gradient(#fffdf8, #fff9f0),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.01),
+      rgba(0, 0, 0, 0.01) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+}
+
+.envelope > .letter {
+  background:
+    linear-gradient(#fffdf8, #fff9f0),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.025),
+      rgba(0, 0, 0, 0.025) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+}
+
+.container > .envelope-wrapper {
+  position: relative; /* needed for the overlay */
+  display: inline-block;
+}
+
+/* 3-side dashed border (left, right, bottom) ALWAYS */
+.envelope-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  pointer-events: none;
+  z-index: 10;
+
+  background:
+    /* left */
+    repeating-linear-gradient(
+        to bottom,
+        var(--heart-color) 0 14px,
+        transparent 14px 26px
+      )
+      left / 4px 100% no-repeat,
+    /* right */
+    repeating-linear-gradient(
+        to bottom,
+        var(--heart-color) 0 14px,
+        transparent 14px 26px
+      )
+      right / 4px 100% no-repeat,
+    /* bottom */
+    repeating-linear-gradient(
+        to right,
+        var(--heart-color) 0 18px,
+        transparent 18px 32px
+      )
+      bottom / 100% 4px no-repeat;
+
+  border-radius: 10px;
+  opacity: 0.95;
+}
+
+/* dashed line on the flap only when CLOSED (wrapper not .flap) */
+.envelope-wrapper:not(.flap) .envelope::before {
+  background: repeating-linear-gradient(
+    to right,
+    var(--heart-color) 0 18px,
+    transparent 18px 32px
+  );
+  background-repeat: no-repeat;
+  background-size: calc(100% - 40px) 4px; /* line length & thickness */
+  background-position: 20px 10px; /* inside the flap triangle */
+}
+
+body::before,
+body::after {
+  content: "♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡\A♡";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  -webkit-text-stroke: 0.8px var(--heart-color);
+
+  white-space: pre;
+  font-size: 30px;
+  line-height: 28px; /* controls spacing */
+  text-align: center;
+
+  color: var(--heart-color);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body::before {
+  left: 12px;
+}
+body::after {
+  right: 12px;
+}
+
+.envelope > .letter {
+  background: #ffedf4;
+}
+
+.envelope > .letter > .text {
+  font-family: "Patrick Hand", cursive;
+  font-size: 12px; /* handwritten fonts like a bit more size */
+  line-height: 1.5;
+}
